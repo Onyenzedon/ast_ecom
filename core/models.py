@@ -3,6 +3,16 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Product Category'
+        verbose_name_plural = 'Categories'
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -14,7 +24,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='product_images/')
+    image = models.ImageField(upload_to='product_images/', default="images/download (3).jpeg/")
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

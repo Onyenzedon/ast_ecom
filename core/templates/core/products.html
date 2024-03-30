@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %}Products - Your E-commerce Store{% endblock %}
+
+{% block content %}
+	<div class="row">
+		{% for product in products %}
+		<div class="col-lg-4">
+            <!-- {% if product.images.all %}
+                <h2>Product Images:</h2>
+                <div class="product-images">
+                    {% for image in product.images.all %}
+                        <img class="thumbnail" src="{{ image.image.url }}" alt="{{ product.name }} Image">
+                    {% endfor %}
+                </div>
+            {% endif %} -->
+			<img class="thumbnail" src="{{product.images.first.image.url}}" alt="{{product.name}} image">
+			<div class="box-element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<hr>
+
+				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+				
+				<a class="btn btn-outline-success" href="{% url 'product' product.id %}">View</a>
+				<h4 style="display: inline-block; float: right"><strong>${{product.price}}</strong></h4>
+
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+{% endblock content %}
