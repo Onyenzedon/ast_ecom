@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.title }} - Your E-commerce Store{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            {% for image in product.images.all %}
+            <img src="{{ image.image.url }}" alt="{{ product.title }}" class="img-fluid">
+            {% empty %}
+            <h3>
+                No images
+            </h3>
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.description }}</p>
+            <p><strong>Price:</strong> #{{ product.price }}</p>
+            <button class="btn btn-primary">Add to Cart</button>
+        </div>
+    </div>
+{% endblock %}
