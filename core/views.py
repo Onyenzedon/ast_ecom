@@ -4,11 +4,14 @@ from .models import Product, ProductImage, Order, OrderItem, Category
 # Create your views here.
 
 def index(request):
-    products = Product.objects.all()[:3]
+    products = Product.objects.all()[:6]
     context = {
         'products' : products
     }
     return render(request, 'core/index.html', context)
+
+def landing(request):
+    return render(request, 'core/landing.html')
 
 def products(request):
     products = Product.objects.all()

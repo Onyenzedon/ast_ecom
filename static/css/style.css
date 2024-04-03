@@ -1,0 +1,8 @@
+.sticky-botto {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffffff; /* Optional: Set background color */
+    /* padding: 10px; Optional: Add padding for spacing */
+  }
+  
