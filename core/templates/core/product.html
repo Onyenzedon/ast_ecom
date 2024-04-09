@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             {% for image in product.images.all %}
             <img src="{{ image.image.url }}" alt="{{ product.title }}" class="img-fluid">
             {% empty %}
@@ -14,11 +14,21 @@
             </h3>
             {% endfor %}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <h2>{{ product.name }}</h2>
             <p>{{ product.description }}</p>
             <p><strong>Price:</strong> #{{ product.price }}</p>
-            <button class="btn btn-primary">Add to Cart</button>
+            <form method="post" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Quantity</span>
+                    </div>
+                    <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" size="4">
+                </div>
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
+            </form>
+            <!-- <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a> -->
         </div>
     </div>
 {% endblock %}
