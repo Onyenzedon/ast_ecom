@@ -1,7 +1,13 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.conf import settings
+import uuid
 
-User = get_user_model()
+
+# User = get_user_model()
+User = settings.AUTH_USER_MODEL
+
+print("USer: ", User)
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -28,14 +34,22 @@ class ProductImage(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    items = models.ForeignKey('OrderItem', on_delete=models.CASCADE)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    order_id = models.UUIDField(default=uuid.uuid4(), editable=False, unique=True, null=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def calculate_total_price(self):
+        total_price = sum(item.subtotal for item in self.items.all())
+        print("All order items: ", self.items.all())
+        return total_price
 
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items", null=True)
+    quantity = models.PositiveIntegerField(null=True)
+    # price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
+    @property
     def subtotal(self):
-        return self.price * self.quantity
+        return self.product.price * self.quantity

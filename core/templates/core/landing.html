@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block content %}
+
+    <main class="main">
+        <section class="services">
+            <div class="container">
+                <h2>Our Services</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="col">
+                            <div class="card">
+                                <a href="{% url 'products' %}">
+                                <img src="{% static 'images/download.jpeg' %}" class="card-img-top" alt="Ecommerce">
+                                <div class="card-body">
+                                    <h5 class="card-title">Ecommerce Solutions</h5>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <a href="#" class="btn btn-sm btn-outline-primary">Learn More</a>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card">
+                                <img src="{% static 'images/download.jpeg' %}" class="card-img-top" alt="Real Estate">
+                                <div class="card-body">
+                                    <h5 class="card-title">Real Estate Expertise</h5>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+    </main>
+                               
+{% endblock %}

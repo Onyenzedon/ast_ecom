@@ -1,0 +1,1 @@
+web: gunicorn 'ast_ecom.wsgi'

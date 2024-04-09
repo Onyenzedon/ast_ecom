@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f(bi*k1o)ym)^qq69*b!n+43rk#jfi$skgk^d=q6dv2o92e!1$'
+SECRET_KEY = config("SECRET_KEY", default="", cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default="", cast=bool)
@@ -85,22 +85,24 @@ WSGI_APPLICATION = 'ast_ecom.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("DB", default="", cast=str), 
-        'USER': config("USER", default="", cast=str), 
-        'PASSWORD': config("P_WORD", default="", cast=str), 
-        'HOST': 'localhost',
-        'PORT': '5432'
-    },
-}
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config("DB", default="", cast=str), 
+            'USER': config("USER", default="", cast=str), 
+            'PASSWORD': config("P_WORD", default="", cast=str), 
+            'HOST': 'localhost',
+            'PORT': '5432'
+        },
     }
+
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
 }
 
 AUTH_USER_MODEL = "accounts.UserAccount"
@@ -139,7 +141,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
